@@ -70,8 +70,8 @@ Symboly se vždy vyhodnocují v aktuální prostředí, pokud symboly v aktuáln
 
 ### **Operátor LET**
 Tento operátor nám umožňuje vytvářet prostředí explicitně, jeho prvním argumentem je seznam popisů vazeb, druhým argumentem je tělo funkce. Zápis je `(let ((a 2) (b (+ 2 1))) (* a b))` vyhodnocuje se následovně:
-1 V aktuálním prostředí se vyhodnotí všechny druhé položky popisů vazeb. (Vyhodnotí se `2` a `(+ 2 1)`)
-2 Vytvoří se nové prostředí a v něm vazby tak, že každá první položka popisu vazby (která musí být symbolem) se naváže na hodnotu druhé položky. (a = 2; b = 3)
-3 Předkem nového prostředí se učiní aktuální prostředí.
-4 Tělo se vyhodnotí v tomto novém prostředí. Výsledek se vrátí jako hodnota celého výrazu. 
+1. V aktuálním prostředí se vyhodnotí všechny druhé položky popisů vazeb. (Vyhodnotí se `2` a `(+ 2 1)`)
+2. Vytvoří se nové prostředí a v něm vazby tak, že každá první položka popisu vazby (která musí být symbolem) se naváže na hodnotu druhé položky. (a = 2; b = 3)
+3. Předkem nového prostředí se učiní aktuální prostředí.
+4. Tělo se vyhodnotí v tomto novém prostředí. Výsledek se vrátí jako hodnota celého výrazu. 
 
