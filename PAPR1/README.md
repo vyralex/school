@@ -63,6 +63,7 @@ Je tabulka symbol a hodnota, ze které se zjišťují vazby symbolů na jejich h
 | Symbol | Hodnota             |
 |--------|---------------------|
 | pi     | 3.141592653589793D0 |
+| ...    | ...                 |
 
 Na začátku máme globální prostředí<br>
 Při volání funkce se stává prostředí funkce aktuálním prostředím a jeho předkem předkem se stává globální prostředí. <br>
