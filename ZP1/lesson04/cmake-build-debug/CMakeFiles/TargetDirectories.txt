@@ -1,0 +1,3 @@
+C:/Users/vyral/school/ZP1/lesson04/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/vyral/school/ZP1/lesson04/cmake-build-debug/CMakeFiles/lesson04.dir
+C:/Users/vyral/school/ZP1/lesson04/cmake-build-debug/CMakeFiles/edit_cache.dir
