@@ -76,3 +76,33 @@ Tento operátor nám umožňuje vytvářet prostředí explicitně, jeho prvním
 3. Předkem nového prostředí se učiní aktuální prostředí.
 4. Tělo se vyhodnotí v tomto novém prostředí. Výsledek se vrátí jako hodnota celého výrazu. 
 
+## Hodina 3
+### Operáror `cond`
+Funguje jako `if`, ale může být vyhodnoceno více podmínek naráz:<br>
+``` lisp
+(cond (podmínka1 výraz1)
+      (podmínka2 výraz2)
+      (podmínka3 výraz3))
+```
+### Operátory AND a OR
+`(and podmínka1 podmínka2 ...)`<br>
+`(or podmínka1 podmínka2 ...)`<br>
+Operátory se vyhodnocují "líně" (částečně), tzn. jakmile je možné říct odpověď, tak se dále nevyhodnosují.
+
+### Rekurzivní funkce
+``` lisp
+(defun power (a n)
+    if (= n 0)
+       1
+       (* a (power a (- n 1))))
+```
+### Iterativní funkce
+``` lisp
+(defun power-rec (a n result)
+    (if (= n 0)
+        result
+        (power-rec a (- n 1) (* result a))))
+
+(defun power (a n)
+    (power-rec a n 1))
+```
