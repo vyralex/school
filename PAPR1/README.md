@@ -37,7 +37,12 @@ Vyhodnocení výrazu `(setf a b)`
 ## Hodina 2
 ### **Definice funkce**
 K definici funkce slouží funkce (makra) **DEFUN**
-zapisujeme ji `(defun jméno-funkce (parametry-funkce) (tělo-funkce))` funkci poté voláme následovně `( jméno-funkce parametry-funkce)`<br>
+zapisujeme ji:
+``` lisp
+(defun jméno-funkce (parametry-funkce)
+    (tělo-funkce))
+```
+Funkci poté voláme následovně: `(jméno-funkce parametry-funkce)`<br>
 Když definujeme funkci, tak ji budeme moct požít vícekrát i na jiných místech programu. Typicky si můžeme definovat funkci, která nám ověří trojúhelníkovou nerovnost (délka nejdelší strany musí být menší než součet délek zbývajících), kterou pak můžeme využít při výpočtu obvodu trojúhelníku (pokud nerovnost neplatí vrátím hodnotu 0) `(if (nerovnost a b c) (+ a b c) 0)` ahoj
 **Další výhody funkce jsou**:<br>
 - Nemusím vědět, jak přesně funkce pracuje – důležité je, co dělá
@@ -48,7 +53,11 @@ Když definujeme funkci, tak ji budeme moct požít vícekrát i na jiných mís
 ### **Vazby**
 Každý (definovaný) symbol má vazbu na nějakou hodnotu.<br>
 Každý symbol může mít více vazeb, ale jen jednu vazbu aktuální.<br>
-Když mám v proměnné `r` nastavenou hodnotu 5 a zavolám funkci která používá r jako parametr, například výpočet obvodu kruhu `(defun circle-area (r) (* r pi))`, pak se mi se stane následující:
+Když mám v proměnné `r` nastavenou hodnotu 5 a zavolám funkci která používá r jako parametr, například výpočet obvodu kruhu 
+``` lisp
+(defun circle-area (r) (* r pi))
+```
+, pak se mi se stane následující:
 1. se vytvoří nová vazba na symbol r
 2. učiní se aktuální (tím zastíní původní vazbu)
 3. nastaví se jí hodnota 10
@@ -70,14 +79,19 @@ Při volání funkce se stává prostředí funkce aktuálním prostředím a je
 Symboly se vždy vyhodnocují v aktuální prostředí, pokud symboly v aktuální prostředí nemají vazbu na hodnotu, pak se dívám na předchozí prostředí.
 
 ### **Operátor LET**
-Tento operátor nám umožňuje vytvářet prostředí explicitně, jeho prvním argumentem je seznam popisů vazeb, druhým argumentem je tělo funkce. Zápis je `(let ((a 2) (b (+ 2 1))) (* a b))` vyhodnocuje se následovně:
+Tento operátor nám umožňuje vytvářet prostředí explicitně, jeho prvním argumentem je seznam popisů vazeb, druhým argumentem je tělo funkce.
+``` lisp
+(let ((a 2) (b (+ 2 1)))
+    (* a b))
+```
+vyhodnocuje se následovně:
 1. V aktuálním prostředí se vyhodnotí všechny druhé položky popisů vazeb. (Vyhodnotí se `2` a `(+ 2 1)`)
 2. Vytvoří se nové prostředí a v něm vazby tak, že každá první položka popisu vazby (která musí být symbolem) se naváže na hodnotu druhé položky. (a = 2; b = 3)
 3. Předkem nového prostředí se učiní aktuální prostředí.
 4. Tělo se vyhodnotí v tomto novém prostředí. Výsledek se vrátí jako hodnota celého výrazu. 
 
 ## Hodina 3
-### Operáror `cond`
+### Operátor `cond`
 Funguje jako `if`, ale může být vyhodnoceno více podmínek naráz:<br>
 ``` lisp
 (cond (podmínka1 výraz1)
@@ -90,6 +104,8 @@ Funguje jako `if`, ale může být vyhodnoceno více podmínek naráz:<br>
 Operátory se vyhodnocují "líně" (částečně), tzn. jakmile je možné říct odpověď, tak se dále nevyhodnosují.
 
 ### Rekurzivní funkce
+**Definice:** Výpočetní proces je rekurzivní, když během aplikace funkce dojde znovu k aplikaci téže
+funkce.
 ``` lisp
 (defun power (a n)
     if (= n 0)
@@ -97,6 +113,8 @@ Operátory se vyhodnocují "líně" (částečně), tzn. jakmile je možné ří
        (* a (power a (- n 1))))
 ```
 ### Iterativní funkce
+**Definice:** Výpočetní proces je iterativní, když na konci aplikace funkce dojde opět k aplikaci téže
+funkce.
 ``` lisp
 (defun power-rec (a n result)
     (if (= n 0)
