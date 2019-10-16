@@ -116,7 +116,7 @@ funkce.
 **Definice:** Výpočetní proces je iterativní, když na konci aplikace funkce dojde opět k aplikaci téže
 funkce.
 ``` lisp
-(defun power-rec (a n result)
+(defun power-iter (a n result)
     (if (= n 0)
         result
         (power-rec a (- n 1) (* result a))))
