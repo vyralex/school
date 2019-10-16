@@ -108,9 +108,9 @@ Operátory se vyhodnocují "líně" (částečně), tzn. jakmile je možné ří
 funkce.
 ``` lisp
 (defun power (a n)
-    if (= n 0)
-       1
-       (* a (power a (- n 1))))
+    (if (= n 0)
+        1
+        (* a (power a (- n 1)))))
 ```
 ### Iterativní funkce
 **Definice:** Výpočetní proces je iterativní, když na konci aplikace funkce dojde opět k aplikaci téže
