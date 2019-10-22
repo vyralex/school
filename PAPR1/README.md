@@ -112,6 +112,14 @@ funkce.
         1
         (* a (power a (- n 1)))))
 ```
+Například pokud zavoláme funkci (power 2 5)
+1. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 4))`
+2. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 3))`
+3. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 2))`
+4. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 1))`
+5. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 0))`
+6. Zjistí se, že n je 0 tak se vrátí se `1`.
+
 ### Iterativní funkce
 **Definice:** Výpočetní proces je iterativní, když na konci aplikace funkce dojde opět k aplikaci téže
 funkce.
