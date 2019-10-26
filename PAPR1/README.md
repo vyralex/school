@@ -112,13 +112,6 @@ funkce.
         1
         (* a (power a (- n 1)))))
 ```
-Například pokud zavoláme funkci (power 2 5)
-1. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 4))`
-2. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 3))`
-3. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 2))`
-4. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 1))`
-5. Zjistí se, že n není 0, tak se stane `(* 2 (power 2 0))`
-6. Zjistí se, že n je 0 tak se vrátí se `1`.
 
 ### Iterativní funkce
 **Definice:** Výpočetní proces je iterativní, když na konci aplikace funkce dojde opět k aplikaci téže
@@ -132,3 +125,63 @@ funkce.
 (defun power (a n)
     (power-rec a n 1))
 ```
+
+## Hodina 5
+### Rekurzivní proces
+Například pokud zavoláme funkci (power 2 3) viz. výše:
+- Zjistí se, že n není 0, tak se stane `(* 2 (power 2 2))`
+- Zjistí se, že n není 0, tak se stane `(* 2 (power 2 1))`
+- Zjistí se, že n není 0, tak se stane `(* 2 (power 2 0))`
+- Zjistí se, že n je 0 tak se vrátí se `1`.
+- Spočítá se hodnota `(* 2 1)` a vrátí se.
+- Spočítá se hodnota `(* 2 2)` a vrátí se.
+- Spočítá se hodnota `(* 2 4)` a vrátí se.
+
+### Iterativní proces
+Například pokud zavoláme funkci (power-iter 2 3 1) viz. výše:
+- Zjistí se, že n není 0, tak se stane `(power-iter 2 2 2)`
+- Zjistí se, že n není 0, tak se stane `(power-iter 2 1 4)`
+- Zjistí se, že n není 0, tak se stane `(power-iter 2 0 8)`
+- Zjistí se, že n je 0 tak se vrátí se `8`.
+
+### Zrychlený proces
+``` lisp
+(defun power2 (n)
+  (* n n))
+
+(defun fast-power (a n)
+  (cond ((= n 0) 1)
+        ((evenp n)
+         (power2 (fast-power a (/ n 2))))
+        (t (* a (fast-power a (- n 1))))))
+```
+Například pokud zavoláme funkci (fast-power 2 3) viz. výše:
+- Zjistí se, že n není 0 a není sudé, tak se stane `(* 2 (fast-power 2 2))`
+- Zjistí se, že n je sudé, tak se stane `(power2 (fast-power 2 1))`
+  - Zjistí se, že n není 0 a není sudé, tak se stane `(* 2 (fast-power 2 0)`
+  - Zjistí se, že n je 0 tak se vrátí se `1`
+  - Spočítá se `(* 2 1)` a vrátí se.
+- Spočítá se hodnota `(power2 2)` - vrátí se.
+- Spočítá se hodnota `(* 2 4)` a vrátí se.
+
+### Náročnost rekurzivního procesu
+**Stromově** rekurzivní výpočetní proces výpočtu n-tého čísla fibonacciho posloupnosti:
+``` lisp
+(defun fib (n)
+  (cond ((= n 0) 0)
+        ((= n 1) 1)
+        (t (+ (fib (- n 2)) (fib (- n 1))))))
+```
+Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběhnout 2x)<br>
+**Lineárně** rekurzivní výpočetní proces výpočtu n-tého čísla fibonacciho posloupnosti:
+``` lisp
+(defun fib-iter (a b n)
+  (if (= n 0)
+      b
+    (fib-iter b (+ a b) (- n 1))))
+
+(defun fib (n)
+  (cond ((= n 1) 0)
+        (t (fib-iter 0 1 (- n 2)))))
+```
+Na každým funkce se volá funkce pouze 1x (takže se žádné číslo nepočítá vícekrát).
