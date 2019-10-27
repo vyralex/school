@@ -120,10 +120,10 @@ funkce.
 (defun power-iter (a n result)
     (if (= n 0)
         result
-        (power-rec a (- n 1) (* result a))))
+        (power-iter a (- n 1) (* result a))))
 
 (defun power (a n)
-    (power-rec a n 1))
+    (power-iter a n 1))
 ```
 
 ## Hodina 5
