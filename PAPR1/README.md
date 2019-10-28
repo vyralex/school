@@ -184,4 +184,4 @@ Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběh
   (cond ((= n 1) 0)
         (t (fib-iter 0 1 (- n 2)))))
 ```
-Na každým funkce se volá funkce pouze 1x (takže se žádné číslo nepočítá vícekrát).
+Ve funkce se volá funkce znovu pouze 1x (takže se žádné číslo nepočítá vícekrát).
