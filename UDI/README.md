@@ -48,10 +48,10 @@ NOR (negace disjunkce)
 
 ## Kvantifikátory
 
-**Obecký kvantifikátor `∀`** s proměnnou `x`<br>
+**Obecký kvantifikátor** `∀` s proměnnou `x`<br>
 "Pro každé x platí, že . . . " zapisujeme `∀x`.
 
-**Existencní kvantifikátor** s proměnnou `x`<br>
+**Existencní kvantifikátor** `∃` s proměnnou `x`<br>
 "Existuje x , pro kter platí . . . "; zapisujeme `∃x`.
 
 ## Literál
