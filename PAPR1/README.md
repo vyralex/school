@@ -181,7 +181,8 @@ Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběh
     (fib-iter b (+ a b) (- n 1))))
 
 (defun fib (n)
-  (cond ((= n 1) 0)
-        (t (fib-iter 0 1 (- n 2)))))
+  (if (= n 1)
+      0
+      (fib-iter 0 1 (- n 2))))
 ```
 Ve funkce se volá funkce znovu pouze 1x (takže se žádné číslo nepočítá vícekrát).
