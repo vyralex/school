@@ -183,6 +183,6 @@ Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběh
 (defun fib (n)
   (if (= n 1)
       0
-      (fib-iter 0 1 (- n 2))))
+    (fib-iter 0 1 (- n 2))))
 ```
 Ve funkce se volá funkce znovu pouze 1x (takže se žádné číslo nepočítá vícekrát).

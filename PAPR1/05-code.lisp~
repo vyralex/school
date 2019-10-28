@@ -3,6 +3,8 @@
 
 
 ; 2
+(defun power2 (a) (* a a))
+
 (defun fast-power-iter (a n result)
   (cond ((= n 0) result)
         ((evenp n) (fast-power-iter (* a a) (/ n 2) result))
