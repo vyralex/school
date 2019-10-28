@@ -1,0 +1,83 @@
+; 1
+; fci nelze prepsat - dojde k zacykleni
+
+
+; 2
+
+;(defun power2 (n result) (* n n))
+
+;(defun fast-power-iter (a n result)
+;  (cond ((= n 0) result)
+;        ((= n 2) (* result result))
+;        ((evenp n)
+;         (fast-power-iter a
+;                          2
+;                          (fast-power-iter a (/ n 2) (result)))
+;        (t (fast-power-iter a (- n 1) (* result a)))))
+;
+
+
+
+
+
+;(defun fast-power-iter (a n result)
+;  (if (= n 0) result
+;    (fast-power-iter a
+;                     (if (evenp n) (/ n 2) (- n 1))
+;                     (if (evenp n) (* result )) ()))
+;;
+;
+;        ((evenp n)
+;         (let ((result (fast-power result 2)))
+;           (fast-power-iter a (/ n 2) result))
+;         (t (fast-power-iter a (- n 1) (* result))))));;;
+;;
+;
+;(defun fast-power (a n)
+;  (fast-power-iter a n 1))
+
+
+
+
+
+
+; 3
+(defun dividesp (a b)
+  (cond ((= a 0) t)
+        ((< a 0) nil)
+        (t (dividesp (- a b) b))))
+
+; 4
+(defun remainder (a b)
+  (if (> a b)
+      b
+    (remainder a (- b a))))
+
+; 5
+(defun primep-rec (a n)
+  (cond ((< a n) t)
+        ((= (remainder n a) 0) nil)
+        (t (primep-rec a (+ n 1)))))
+
+(defun primep (a)
+  (if (> a 1)
+      (primep-rec a 2)
+    nil))
+
+; 6
+(defun soucet-delitelu-rec (a n)
+  (if (= a n)
+      0
+    (if (dividesp n a)
+        (+ n (soucet-delitelu-rec a (+ n 1)))
+      (soucet-delitelu-rec a (+ n 1)))))
+
+(defun perfectp (a)
+  (= (soucet-delitelu-rec a 1) a))
+
+; 7
+(defun pascal (x y)
+  (cond ((= y 0) 1)
+        ((= x y) 1)
+        (t (+ (pascal (- x 1) y)
+              (pascal (- x 1) (- y 1))))))
