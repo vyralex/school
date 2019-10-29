@@ -186,3 +186,42 @@ Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběh
     (fib-iter 0 1 (- n 2))))
 ```
 Ve funkce se volá funkce znovu pouze 1x (takže se žádné číslo nepočítá vícekrát).
+
+# Hodina 6
+## Datové struktury
+- **Konstruktory** vytváří objekt dané struktury.
+- **Selektory** vrací hodnotu, která je v dané struktuře.
+
+Nemusím vědět, jak je datová struktura vytvořena, ale můžu jí umět používat. Pokot hovoříme o abstraktní datové struktuře.
+*Například souřadnice bodu*.
+
+## Pár
+**Tečkový pár** je dvojce dvou složek `car` (první) a `cdr` (druhý).
+- Konstruktor `(cons 1 2)` vásledek `(1 . 2)`.
+- Jednotlivé prvky múže získat funkcemi `car` a `cdr`.
+- Ověření, zda zadaná hodnota je pár `(consp X)`.
+
+### Zlomky
+Zlomky můžeme reprezentovat jako tečkové páry.
+``` lisp
+; Kontruktor
+(defun fraction (a b)
+  (cons a b))
+; Selektor citatele
+(defun numer (a)
+  (car a))
+; Selektor jmenovatele
+(defun denom (b)
+  (cdr b))
+```
+Další operace s naší strukturou zlomků (například `+` a `*`).
+``` lisp
+(defun frac-+ (x y)
+  (fraction (+ (* (number x) (denom y))
+               (* (number y) (denom x)))))
+
+(defun frac-* (x y)
+  (fraction (* (number x) (number y)
+               (denom x) (denom y))))
+```
+

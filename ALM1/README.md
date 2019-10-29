@@ -44,7 +44,7 @@ Určuje kolik je potřeba použít instrukcí pro daný vstup.
 
 ## Insert sort
 Algoritmus má na vždy levé straně pole seřízené prvky, podívá se na první neseřízený a zařadí ho do seřízené části na správné místo. (Jako kdybychom měli v levé ruce karty a postupně tam přidávali další na správné místo)
-``` c
+``` pascal
 Insertion-Sort(A[0..n − 1])
     for j ← 1 to n − 1 do
         t ← A[j]
@@ -57,7 +57,7 @@ Insertion-Sort(A[0..n − 1])
 
 ## Select Sort
 Algoritmus prohledává pole a hledá v něm nejmenší prvek, ten vymění s prvkem na první pozici, se podívá na celou neseřízenou část a na ní se algoritmus opět aplikuje.
-``` c
+``` pascal
 Selection-Sort(A[0..n − 1])
     for j ← 0 to n − 2 do
         Min ← j
@@ -71,7 +71,7 @@ Selection-Sort(A[0..n − 1])
 
 ## Bubble Sort
 Algoritmus prochází pole od konce a porovnává sousední prvky, pokud je aktuální prvek menší než předchozí, tak je vymění, výsledek n-tého průchodu je, že na začátku pole bude n seřízený nejmenších prvků v poli.
-``` c
+``` pascal
 Bubble-Sort(A[0..n − 1])
     for j ← 0 to n − 2 do
         for i ← n − 1 downto j + 1 do
