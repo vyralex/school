@@ -3,6 +3,17 @@
 
 
 ; 2
+;;;;;;Rekurzivní fast-power
+;(defun power2 (n)
+;  (* n n))
+;
+;(defun fast-power (a n)
+;  (cond ((= n 0) 1)
+;        ((evenp n)
+;         (power2 (fast-power a (/ n 2))))
+;        (t (* a (fast-power a (- n 1))))))
+;;;;;;
+
 (defun fast-power-iter (a n result)
   (cond ((= n 0) result)
         ((evenp n) (fast-power-iter (* a a) (/ n 2) result))
