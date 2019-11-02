@@ -225,3 +225,9 @@ Další operace s naší strukturou zlomků (například `+` a `*`).
                (denom x) (denom y))))
 ```
 
+## Čistý seznam 
+Základem jsou tečkové páry. Seznam o `n` prvcích je tečkový pár, kde je na první místě první prvek a na druhém místě seznam o `n – 1` prvcích. Seznam o `0` prvcích je nil.
+``` lisp
+; Příklad čistého seznamu
+(cons 1 (cons 2 (cons 3 nil)))
+```
