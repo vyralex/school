@@ -32,6 +32,13 @@
       (+ (car A) (sum-list (cdr A)))
     0))
 
+(defun sum-list-iter (A result)
+  (if (car A)
+      (sum-list-iter (cdr A) (+ result (car A)))
+    result))
+
+(defun sum-list-ir (A) (sum-list-iter A 0))
+
 (defun multiply-by (A n)
   (if (car A)
       (cons (* (car A) n)
