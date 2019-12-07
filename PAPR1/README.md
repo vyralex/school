@@ -126,7 +126,7 @@ funkce.
     (power-iter a n 1))
 ```
 
-## Hodina 5
+## Hodina 4
 ### Rekurzivní proces
 Například pokud zavoláme funkci (power 2 3) viz. výše:
 - Zjistí se, že n není 0, tak se stane `(* 2 (power 2 2))`
@@ -187,7 +187,7 @@ Na každé konci funkce se volá 2x tentýž funkce (některé výpočty proběh
 ```
 Ve funkce se volá funkce znovu pouze 1x (takže se žádné číslo nepočítá vícekrát).
 
-# Hodina 6
+# Hodina 5
 ## Datové struktury
 - **Konstruktory** vytváří objekt dané struktury.
 - **Selektory** vrací hodnotu, která je v dané struktuře.
@@ -231,3 +231,129 @@ Základem jsou tečkové páry. Seznam o `n` prvcích je tečkový pár, kde je 
 ; Příklad čistého seznamu
 (cons 1 (cons 2 (cons 3 nil)))
 ```
+
+# Hodina 6
+## Použití operátorů AND a OR místo IF
+Pokud funkce vrací pravdivostní hodnotu, tak se nemusí používat funkce if, ale stačí kombinace funkcí `AND` a `OR`
+Například funkce kontrolující, zda je zadaný parametr seznam:
+``` lisp
+(defun proper-list-p (x)
+  (or (null x)
+      (and (consp x)
+           (proper-list-p (cdr x)))))
+```
+
+## Speciální operáto `let*`
+Příklad:
+``` lisp
+(let* ((a 2)
+       (b (* a 2)))
+  (+ a b))
+```
+Výraz se vyhodnocuje přesně jako 
+``` lisp
+(let ((a 2))
+  (let ((b (* a 2)))
+    (+ a b)))
+       (b (* a 2)))
+  (+ a b))
+```
+
+# Hodina 7
+## Speciální operátor `QUOTE`
+Operátor přijímá jeden argument a vrací ho, aniž by ho vyhodnotil<br>
+`(quote (1 2 3))` vrátí seznam (1 2 3)<br>
+`(quote a)` vrátí proměnnou a (je jedno, zda jsme přední proměnné přiřadily nějakou hodnotu)<br>
+**Zkrácený zápis tohoto operátoru je** `'` (apostrof)<br>
+předešlé příklady lze tedy zapsat jako `'(1 2 3)` a `'a`
+
+# Hodina 8
+## Vedlejší efekt
+Vedlejší efektu je stav, kdy nám funkce kromě vrácení výsledku udělá ještě něco jiného.<br>
+Například `(setf a 5)` vrátí jako výsledek 5, ale vedlejší efekt je takový, že nastaví hodnotu proměnné a na 5.
+
+## Textové řetězce
+Textové řetězce zapisujeme do uvozovek `"Priklad textoveho retezce"`<br>
+Řetězce pak můžeme přiřazovat do proměnných nebo je tisknou
+
+## Tisk
+1. Funkce PRINT přijímá jeden argument ten vytiskne na nový řádek, textový řetězec vytiskne s uvozovkami a parametr vyhodnotí a vrátí jeho hodnotu.
+2. Funkce PRINC přijímá jeden argument ten vytiskne, řetězec tiskne bez uvozovek. Parametr vyhodnotí a vrátí jeho hodnotu.
+3. Funkce TERPRI vytiskne prázdný řádek
+ 
+## Bloky kódu
+Když definujeme funkci pomocí makra `defun`, tak tím implicitně říkáme, že se ve funkci může vyhodnocovat více výrazů. Například:
+``` lisp
+(defun power2 (a)
+  (princ "Druha mocnina cisla ")
+  (princ a)
+  (princ " je ")
+  (princ (* a a)))
+```
+`(power2 5)` vytiskne "Druha mocnina cisla 5 je 25".
+
+**Explicitní** vytvoření bloku kódu za pomocí speciálního operátoru PROGN<br>
+Například speciální operátor IF nevytváří bloky kódu implicitně a proto se nám může hodit umět blok definovat explicitně.
+K tomu slouží speciální operátor PROGN používá se takto `(progn vyraz-1 vyraz-2 ... vyraz-n)`. Příklad použití
+``` lisp
+(defun print-numbers (n)
+  (if (<= n 0)
+      nil
+    (progn
+      (print (- n 1))
+      (print-numbers (- n 1)))))
+```
+`(print-numbers 3)` vytiskne:<br>
+3<br>
+2<br>
+1<br>
+0
+
+# Hodina 9
+## Funkce jako hodnoty
+Hodnotu funkce můžeme získá za pomocí operátoru **function**, na příklad `(function +)`. Funkci můžeme také přiřadit do hodnoty například `(setf a (function +))`. Zkrácený zápis operátoru function je `#'`, použití je stejné jako u QUOTE `(setf a #'+)`
+
+Funkci poté můžeme volat pomocí funkce **funcall**. Mějme například funkci
+``` lisp
+(defun foo (fun a b)
+  (funcall fun a b))
+```
+Tuto funkci můžeme nyní použít jako jakoukoliv funkci které bere 2 argumenty. Příklady: `(foo #'+ 5 2)` sečte čísla a vrátí 7, `(foo (function -) 5 2)` odečte čísla a vrátí 3, atd...
+
+## Mapování
+Mapováním se rozumí aplikování funkce na každý prvek seznamu. Například na seznam `(1 2 3 4 5)` namapovat druhou mocninu. Na to nám slouží funkce **mapcar**. Příklad použití `(mapcar #'power2 '(1 2 3 4 5))` na vrátí seznam `(1 4 9 16 25)`.
+
+## Hodnotová a funkční vazba
+Vazba symbolu v prostředí může být funkční, to znamená, že je vázaná na funkci, nebo hodnotová, to znamená, že je vázaná na nějakou hodnotu.
+
+## Labels
+Za pomocí speciálního operátoru **labels** si můžeme vytvoří funkci uvnitř funkce. Může se hodit, pokud je naše funkce iterativní, ale my nechceme mí v globálním prostředí tuto definici funkce. Příklad:
+``` lisp
+(defun power (a n)
+  (labels ((iter (a n result)
+             (if (= n 0)
+                 result
+               (iter a (- n 1) (* a result)))))
+    (iter a n 1)))
+```
+
+# Hodina 10
+## Anonymní funkce (lambda funkce)
+Pomocí makra **lambda** můžeme vytvářet anonymní funkce. Syntaxe `(lambda (parametry) (tělo funkce))`. Použití *ze cvičení*:
+``` lisp
+(defun print-sequence (seq)
+  (labels ((iter (index)
+             (if (>= index 20)
+                 (princ "... ")
+               (progn (princ (mem seq index))
+                 (princ ", ")
+                 (iter (1+ index))))))
+    (iter 0)
+    nil))
+
+(defun even-members (fun)
+  (lambda (index) (funcall fun (* index 2))))
+```
+Funkce `print-sequence` bere jako parametr funkci, která pro daný index vypočítá prvek dané posloupnosti. Funkce `even-members` bere jako parametr funkci posloupnosti a vrací tu samou funkci, ale jen pro sudá čísla.<br>
+Když zavoláme funkci `(print-sequence (even-members (lambda (a) (- a 10))))` tak funkce vytiskne: `-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, ...`
+ 
