@@ -1,3 +1,6 @@
+<!--
+prezentace 1
+-->
 # Otázka 1
 ## Obsah
 1. Úvod do logiky
