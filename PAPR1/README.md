@@ -357,3 +357,22 @@ Pomocí makra **lambda** můžeme vytvářet anonymní funkce. Syntaxe `(lambda 
 Funkce `print-sequence` bere jako parametr funkci, která pro daný index vypočítá prvek dané posloupnosti. Funkce `even-members` bere jako parametr funkci posloupnosti a vrací tu samou funkci, ale jen pro sudá čísla.<br>
 Když zavoláme funkci `(print-sequence (even-members (lambda (a) (- a 10))))` tak funkce vytiskne: `-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, ...`
  
+# Hodina 12 (11)
+## Jazyk Scheme
+### Symboly
+Mají jen jeden druh vazeb (v lispu 2 druhy funkční a hodnotové). Do proměnné se přiřazují hodnody pomocí operátoru **define**.
+``` lisp
+(define a power2)
+(define a 10)
+```
+### Vyhodnocovací proces
+V seznam se první argument vyhodnocuje, takže je možná místo prvního prvku na psat třeba **if**:
+``` lisp
+((if t + *) 3 3)
+```
+Výsledkem bude 6 (v lispu by program spadl, protože prvním argumentem není funkce)
+
+### Procedura ss-eval
+**ss-eval** vyhodnocuje výraz zadaný v argumentu
+
+### 
