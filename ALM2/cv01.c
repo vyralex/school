@@ -97,7 +97,7 @@ void sort_by_name (person persons[], int n)
 
 int find_persons_by_firstname(person persons[], const int n, char name[])
 {
-    unsigned int *founded = (unsigned int *)calloc(n, sizeof(person));
+    unsigned char *founded = (unsigned char *)calloc(n, sizeof(person));
     for (int i = 0; i < n; i++)
         if (!compare_strings(persons[i].first_name, name))
             *(founded + i) = 1;
@@ -110,8 +110,8 @@ int find_persons_by_firstname(person persons[], const int n, char name[])
 int main ()
 {
     const int count = 11;
-    person persons[count] = {{"Alex",     "Vyroubal",  {1996, 11, 17}},
-                             {"Leona",    "Vaculkova", {1898,  5, 12}},
+    person persons[count] = {{"Alex",     "Vyrazil",   {1996, 11, 17}},
+                             {"Leona",    "Kratka",    {1898,  5, 12}},
                              {"Milan",    "Schwarts",  {1975,  1,  1}},
                              {"Karel",    "Motak",     {2000, 10, 20}},
                              {"Julie",    "Hladka",    {2004,  9, 28}},
