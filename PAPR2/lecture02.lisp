@@ -35,5 +35,4 @@
 (defmacro reverse-progn (&rest args)
   `(progn ,@(reverse args)))
 
-; DEFUN
 

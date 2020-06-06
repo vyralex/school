@@ -33,6 +33,13 @@
 
 ; (get-children-values-by-index '(1 (2) (3 (4 (5) (6 (7)))) (8)) 1)
 
+(defun my-find (list elem &key (test #'equal))
+  (if list
+      (if (funcall test elem (car list))
+          elem
+        (my-find (cdr list) elem :test test))
+    nil))
+
 
 
 
