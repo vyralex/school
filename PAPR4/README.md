@@ -86,7 +86,7 @@ Místo v programu, kde se všechny příchozí procesy uspí, doku na bariéru n
 Lze nahradit semafory
 
 #### Příklad pro 2 procesy (A a B):
-    mutex_A = Semafor(0)<br>
+    mutex_A = Semafor(0)
     mutex_B = Semafor(0)
     | Proces A        | Proces B        |
     | --------------- |:---------------:|
@@ -209,6 +209,105 @@ def reader(id: int):
  ```
 
 ## Hodina 6 (Vačeřící filozofové)
+Máme `n` filozovů, kteří se chtějí najíst, mezi sousedními dvěma filozofi je vidlička. Pokud si každý filozof vezme nejdříve pravou vidličku, tak už si žádný filozof nebude moct vzít tu levou a nikdo se nenají.
+
+### Příklad
+``` python
+phils = 5
+forks = [semaphore(1) for i in range(phils)]
+
+def left(id):
+    return n
+
+def right(id):
+    return (n + 1) % phils
+
+def get_forks(id):
+    forks[left(id)].acquire()
+    forks[right(id)].acquire()
+
+def put_forks(id):
+    forks[left(id)].release()
+    forks[right(id)].release()
+
+def phil(id):
+    thinking() # neni naiplementovano (neni dulezite)
+    get_forks(id)
+    eat() # neni naiplementovano (neni dulezite)
+    put_forks(id)
+```
+
+### Řešení 1 (Asymetrické)
+Změníme pořadí braní si vidliček alespoň jednomu filozofovi. Změníme metody `left` a `right`.
+``` python
+def left(id):
+    if id != 0:
+        return n
+    return phils - 1
+
+def right(id):
+    if id != 0:
+        return (n + 1) % phils
+    return 0
+```
+Toto řešení není moc přehledné
+
+### Řešení 2 (U stolo nemohou být všichni)
+Řekneme, že když je u stolu, když příjde ke stolu poslední filozof, tak se nemůže posadit, dokud někdo jiný neodejde. Změníme metody `get_forks` a `put_forks` a přidámě semafor.
+``` python
+places = semaphore(phils - 1)
+
+def get_forks(id):
+    places.acquire()
+    forks[left(id)].acquire()
+    forks[right(id)].acquire()
+
+def put_forks(id):
+    forks[left(id)].release()
+    forks[right(id)].release()
+    places.release()
+```
+
+### Řešení 3 (Tenenbaumovo řešení)
+Každý filozof bude mít svůj stav jestli jí, přemýšlí,
+nebo je hladový a místo vidliček budeme sledovat místa.
+Přidáme proměnné `state`, `places` a `mutex` a metodu `test` a
+změníme metody `get_forks` a `put_forks`.
+``` python
+state = ['thinking'] * 5
+places = [semaphore(0) for i in range(phils)]
+mutex = semaphore(1)
+
+def test(id):
+    if (state[id] == 'hungry') and (state[left(id)] != 'eating') and (state[right(id)] != 'eating'):
+        state[id] = 'eating'
+        place[id].release()
+
+def get_forks(id):
+    mutex.acquire()
+    state[id] = 'hungry'
+    test(id)
+    mutex.release()
+    place[id].acquire()
+
+def put_forks(id):
+    mutex.acquire()
+    state[id] = 'thinking'
+    test(left(id))
+    test(right(id))
+    mutex.release()
+```
+Problém s tímto řešením je, že se může stát, že jeden filozof se nikdy nenají.
+
+### Důkazy
+- Bezpečnost = spor se špatným řešením
+- Živost = za všech okolností se stane "to dobré"
 
 
+## Hodina 7 (Monitory)
+Monitor je objekt který obsahuje
+- Metody monitoru
+- Podmíněné proměnnné
+  1. Blokojící
+  2. Neblokující
 
