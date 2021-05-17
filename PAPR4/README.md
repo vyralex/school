@@ -80,7 +80,7 @@ Proces signalizu ostatním, že někam dorazil
 Místo v programu, kde se všechny příchozí procesy uspí, doku na bariéru nedorazí všechyny procesy
 
 
-## Hodina 4 (Bariéry a klasické problémy)
+## Hodina 4 (Bariéry a Producent-Konyument)
 
 ### Bariéry
 Lze nahradit semafory
@@ -136,9 +136,79 @@ for i in range(len(array)):
 ```
 
 
-## Hodina 5
+## Hodina 5 (Čtenáři-Písaři)
+
+2 Typy procesů, které přistupují ke sdílenému zdroji
+- Čtenáři čtou ze sdíleného zdroje
+- Písaři mohou zapisovat do sdíleného zdroje
+
+### Podmínky
+- Číst lze, pokud se nezapisuje
+- Zapisovat lze, pokud se nečte, ani se nezapisuje
 
 
+ ```python
+empty = semaphore(1)
+lock = semaphore(1)
+readers = 0
+
+def writter(id: int):
+    empty.acquire()
+    write(id)
+    empty.release()
+
+def reader(id: int):
+    lock.acquire()
+    readers += 1
+    if readers == 1:
+        empty.acquire()
+    lock.release()
+
+    read(id)
+    
+    lock.acquire()
+    readers -= 1
+    if readers == 0:
+        empty.release()
+    lock.release()
+ ```
+
+Zde hrozí, že pokud čtenářů bude mnoho, tak se písaři vůbec nemusí dotat k zápisu,
+proto přidáme turniket.
+
+ ```python
+empty = semaphore(1)
+lock = semaphore(1)
+readers = 0
+turniket = semaphore(1)
+
+def writter(id: int):
+    turniket.acquire()
+    empty.acquire()
+    write(id)
+    turniket.release()
+    empty.release()
+
+def reader(id: int):
+    turniket.acquire()
+    turniket.release()
+
+    lock.acquire()
+    readers += 1
+    if readers == 1:
+        empty.acquire()
+    lock.release()
+
+    read(id)
+    
+    lock.acquire()
+    readers -= 1
+    if readers == 0:
+        empty.release()
+    lock.release()
+ ```
+
+## Hodina 6 (Vačeřící filozofové)
 
 
 
